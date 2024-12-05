@@ -9,5 +9,5 @@ class CarsTable(Base):
     brand: Mapped[str] = mapped_column(String(32), nullable=False)
     model: Mapped[str] = mapped_column(String(32), nullable=False)
     year: Mapped[str] = mapped_column(String(32), nullable=False)
-    malfunction: Mapped[str] = mapped_column(String(128), nullable=False)
+    malfunction: Mapped[str] = mapped_column(String(64), nullable=False)
     bookings: Mapped[BookingsTable] = relationship(back_populates='car')

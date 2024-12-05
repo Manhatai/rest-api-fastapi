@@ -1,17 +1,18 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 import uvicorn
 from pydantic import BaseModel
+from fastapi import HTTPException
 from typing import List
 
 app = FastAPI()
+
+tasks = []
 
 class Task(BaseModel):
     id: int
     title: str
     description: str
     completed: bool = False
-
-tasks = []
 
 @app.post("/tasks/", response_model=Task, status_code=201)
 async def create_task(task: Task):

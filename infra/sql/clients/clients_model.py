@@ -1,9 +1,11 @@
-'''from sqlalchemy import Boolean, mapped, ForeignKey, Integer, String
-# from sqlalchemy.orm import 
+from sqlalchemy import Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from infra.sql.database import Base
+from infra.sql.bookings.bookings_model import BookingsTable
 
-class ClientsModel(db.Model):
+class ClientsTable(Base):
     __tablename__ = 'clients'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    firstName = db.Column(db.String(15), nullable=False)
-    phone = db.Column(db.String, nullable=False)
-    bookings = db.relationship('BookingsModel', back_populates='client')'''
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    firstName: Mapped[str] = mapped_column(String(32), nullable=False)
+    phone: Mapped[str] = mapped_column(String(32), nullable=False)
+    bookings: Mapped[BookingsTable] = relationship(back_populates='client')

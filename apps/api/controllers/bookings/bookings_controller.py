@@ -2,9 +2,12 @@ from fastapi import APIRouter, HTTPException, Depends
 from infra.sql.database.database import get_db
 from sqlalchemy.orm import Session
 from infra.schemas.bookings.bookings_schema import Booking
+from infra.sql.bookings.bookings_model import BookingsTable
 from typing import List
 
 bookings_router = APIRouter()
+bookings = []
+
 
 @bookings_router.post("/bookings", response_model=Booking, status_code=201)
 async def create_task(booking: Booking):
@@ -13,8 +16,9 @@ async def create_task(booking: Booking):
     
 
 @bookings_router.get("/bookings", response_model=List[Booking], status_code=200)
-async def read_tasks():
-    return bookings
+async def read_tasks(db: Session = Depends(get_db)):
+    all_bookings = db.query(BookingsTable).all()
+    return all_bookings
 
 @bookings_router.get("/bookings/{booking_id}", response_model=Booking, status_code=200)
 async def read_task(booking_id: int):

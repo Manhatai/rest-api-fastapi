@@ -6,6 +6,7 @@ from infra.sql.clients.clients_model import ClientsTable
 from typing import List
 
 clients_router = APIRouter()
+clients = []
 
 @clients_router.post("/clients", response_model=Client, status_code=201)
 async def create_task(client: Client, db: Session = Depends(get_db)):
@@ -15,7 +16,7 @@ async def create_task(client: Client, db: Session = Depends(get_db)):
 
 @clients_router.get("/clients", response_model=List[Client], status_code=200)
 async def read_tasks(db: Session = Depends(get_db)):
-    all_clients = db.query(Client).all()
+    all_clients = db.query(ClientsTable).all()
     return all_clients
 
 @clients_router.get("/clients/{client_id}", response_model=Client, status_code=200)

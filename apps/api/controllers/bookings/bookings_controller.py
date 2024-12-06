@@ -1,28 +1,29 @@
-from fastapi import APIRouter, HTTPException
-from infra.sql.database.database import bookings
+from fastapi import APIRouter, HTTPException, Depends
+from infra.sql.database.database import get_db
+from sqlalchemy.orm import Session
 from infra.schemas.bookings.bookings_schema import Booking
 from typing import List
 
 bookings_router = APIRouter()
 
-@bookings_router.post("/", response_model=Booking, status_code=201)
+@bookings_router.post("/bookings", response_model=Booking, status_code=201)
 async def create_task(booking: Booking):
     bookings.append(booking)
     return booking
     
 
-@bookings_router.get("/", response_model=List[Booking], status_code=200)
+@bookings_router.get("/bookings", response_model=List[Booking], status_code=200)
 async def read_tasks():
     return bookings
 
-@bookings_router.get("/{booking_id}", response_model=Booking, status_code=200)
+@bookings_router.get("/bookings/{booking_id}", response_model=Booking, status_code=200)
 async def read_task(booking_id: int):
     for booking in bookings:
         if booking.id == booking_id:
             return booking
         raise HTTPException(status_code=404, detail="The following booking doesn't exist!")
             
-@bookings_router.put("/{booking_id}", response_model=Booking, status_code=200)
+@bookings_router.put("/bookings/{booking_id}", response_model=Booking, status_code=200)
 async def update_task(booking_id: int, task_updated: Booking):
     for booking in bookings:
         if booking.id == booking_id:
@@ -31,7 +32,7 @@ async def update_task(booking_id: int, task_updated: Booking):
             return booking
         raise HTTPException(status_code=404, detail="The following booking doesn't exist!")        
             
-@bookings_router.delete("/{booking_id}", status_code=204)
+@bookings_router.delete("/bookings/{booking_id}", status_code=204)
 async def delete_task(booking_id: int):
     for booking in bookings:
         if booking.id == booking_id:

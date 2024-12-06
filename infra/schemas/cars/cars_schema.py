@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class Car(BaseModel):
-    id: int
+class CarSchema(BaseModel):
+    id: Optional[int] = None
     brand: str
     model: str
     year: str

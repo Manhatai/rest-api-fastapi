@@ -1,7 +1,8 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class Booking(BaseModel):
-    id: int
+class BookingSchema(BaseModel):
+    id: Optional[int] = None
     date: str
     hour: str
     car: str

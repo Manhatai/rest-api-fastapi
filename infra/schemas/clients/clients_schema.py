@@ -1,6 +1,7 @@
 from pydantic import BaseModel
+from typing import Optional
 
-class Client(BaseModel):
-    id: int
+class ClientSchema(BaseModel):
+    id: Optional[int] = None #https://docs.pydantic.dev/latest/concepts/models/#basic-model-usage
     firstName: str
     phone: str

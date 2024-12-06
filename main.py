@@ -7,9 +7,8 @@ from infra.sql.database.database import engine, SessionLocal, Base
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
-    title="CMWSApi"
+    title="CMWSApi" 
 ) 
-
 app.include_router(clients_router, prefix="/api")
 app.include_router(cars_router, prefix="/api")
 app.include_router(bookings_router, prefix="/api")

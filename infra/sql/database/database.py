@@ -1,17 +1,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-import os
-
-__DB_BASE_HOST = f"{os.getenv('REST_API_DB_HOST')}:{os.getenv('REST_API_DB_PORT')}"
-__DB_CREDENTIALS = f"{os.getenv('REST_API_DB_LOGIN')}:{os.getenv('REST_API_DB_PASSWORD')}"
-SQLALCHEMY_DATABASE_URI = f'postgresql://{__DB_CREDENTIALS}@{__DB_BASE_HOST}/{os.getenv("REST_API_DB_NAME")}'
+from config.config import SQLALCHEMY_DATABASE_URI
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+Base = declarative_base() # https://stackoverflow.com/questions/15175339/sqlalchemy-what-is-declarative-base
 
-def get_db():
+def get_db(): # https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/
     db = SessionLocal()
     try:
         yield db

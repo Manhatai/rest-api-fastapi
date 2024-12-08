@@ -1,0 +1,8 @@
+stuff to do:
+  - User model,
+  - User table,
+  - User schema
+  - Auth required wrapper
+  - User auth/reg controllers
+  - Insomnia requests update
+  - tests?

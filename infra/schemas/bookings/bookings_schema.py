@@ -8,6 +8,6 @@ class BookingSchema(BaseModel):
     date: str
     hour: str
     car_id: int
-    car: Optional[CarSchema] = None # ensures validation and serialization
+    car: Optional[CarSchema] = None
     client_id: int
     client: Optional[ClientSchema] = None

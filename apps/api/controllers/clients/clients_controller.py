@@ -1,17 +1,19 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from infra.sql.database.database import get_db
 from sqlalchemy.orm import Session
 from infra.schemas.clients.clients_schema import ClientSchema
 from infra.sql.clients.clients_model import ClientsTable
 from infra.sql.bookings.bookings_model import BookingsTable
 from utils.global_catch.global_catch import global_catch
+from utils.auth_check.auth_check import TokenBearer
 from utils.logger.logger import logger
 
 clients_router = APIRouter()
+token_bearer = TokenBearer()
 
 @clients_router.get("/clients", response_model=list[ClientSchema], status_code=200)
 @global_catch
-async def get_clients(db: Session = Depends(get_db)):
+async def get_clients(db: Session = Depends(get_db), user_details=Depends(token_bearer)):
     #raise TypeError("Only integers are allowed") 
     all_clients = db.query(ClientsTable).all()
     logger.info(f"Client list returned successfully. [200]")
@@ -19,7 +21,7 @@ async def get_clients(db: Session = Depends(get_db)):
 
 @clients_router.get("/clients/{client_id}", response_model=ClientSchema, status_code=200)
 @global_catch
-async def get_client(client_id: int, db: Session = Depends(get_db)):
+async def get_client(client_id: int, db: Session = Depends(get_db), user_details=Depends(token_bearer)):
     specific_client = db.query(ClientsTable).filter(ClientsTable.id == client_id).first()
     if not specific_client:
         logger.info(f"Client with ID {client_id} not found. [404]")
@@ -29,7 +31,7 @@ async def get_client(client_id: int, db: Session = Depends(get_db)):
 
 @clients_router.post("/clients", response_model=ClientSchema, status_code=201)
 @global_catch
-async def create_client(client: ClientSchema, db: Session = Depends(get_db)):
+async def create_client(client: ClientSchema, db: Session = Depends(get_db), user_details=Depends(token_bearer)):
     new_client = ClientsTable( # constructor
         firstName = client.firstName,
         phone = client.phone
@@ -42,7 +44,7 @@ async def create_client(client: ClientSchema, db: Session = Depends(get_db)):
 
 @clients_router.put("/clients/{client_id}", response_model=ClientSchema, status_code=200)
 @global_catch
-async def update_client(client_id: int, update_data: ClientSchema, db: Session = Depends(get_db)):
+async def update_client(client_id: int, update_data: ClientSchema, db: Session = Depends(get_db), user_details=Depends(token_bearer)):
     client = db.query(ClientsTable).filter(ClientsTable.id == client_id).first()
     if not client:
         logger.info(f"Client with ID {client_id} not found. [404]")
@@ -56,7 +58,7 @@ async def update_client(client_id: int, update_data: ClientSchema, db: Session =
         
 @clients_router.delete("/clients/{client_id}", status_code=204)
 @global_catch
-async def delete_client(client_id: int, db: Session = Depends(get_db)):
+async def delete_client(client_id: int, db: Session = Depends(get_db), user_details=Depends(token_bearer)):
     deleted_client = db.query(ClientsTable).filter(ClientsTable.id == client_id).first()
     if not deleted_client:
         logger.info(f"Client with ID {client_id} not found. [404]")

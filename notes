@@ -1,11 +1,4 @@
 stuff to do:
-  - User model,
-  - User table,
-  - User schema
-  - Auth required wrapper
-  - User auth/reg controllers
-  - Insomnia requests update
   - tests?
-
 
 self signed cert command: openssl req -x509 -newkey rsa:4096 -nodes -out cert.pem -keyout key.pem -days 365

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastapi-config
+data:
+  DATABASE_HOST: {{ .Values.database.host | default "db" | quote }}
+  DATABASE_PORT: {{ .Values.database.port | default "5432" | quote }}
+  DATABASE_NAME: {{ .Values.database.name | default "fastapitest" | quote }}
+  DATABASE_USER: {{ .Values.database.user | default "postgres" | quote }}
+  DATABASE_PASSWORD: {{ .Values.database.password | default "password" | quote }}

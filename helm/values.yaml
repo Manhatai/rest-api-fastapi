@@ -1,0 +1,17 @@
+database:
+  host: "db"
+  port: "5432"
+  name: "fastapitest"
+  user: "postgres"
+  password: "6526"
+  image: "postgres:15-alpine"
+
+image:
+  repository: fastapi_test-web
+  tag: latest
+  pullPolicy: Never
+
+service:
+  type: NodePort
+  port: 8000
+  nodePort: 30001

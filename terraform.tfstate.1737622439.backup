@@ -1,0 +1,116 @@
+{
+  "version": 4,
+  "terraform_version": "1.10.4",
+  "serial": 156,
+  "lineage": "9769cd05-c0c3-94b2-451c-00e5c7d81948",
+  "outputs": {
+    "fastapi_service_url": {
+      "value": "http://localhost:30001",
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "helm_release",
+      "name": "fastapi",
+      "provider": "provider[\"registry.terraform.io/hashicorp/helm\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "atomic": false,
+            "chart": "./helm",
+            "cleanup_on_fail": false,
+            "create_namespace": true,
+            "dependency_update": false,
+            "description": null,
+            "devel": null,
+            "disable_crd_hooks": false,
+            "disable_openapi_validation": false,
+            "disable_webhooks": false,
+            "force_update": false,
+            "id": "fastapi-test",
+            "keyring": null,
+            "lint": false,
+            "manifest": null,
+            "max_history": 0,
+            "metadata": [
+              {
+                "app_version": "1.0",
+                "chart": "fastapi-test",
+                "first_deployed": 1737587151,
+                "last_deployed": 1737587151,
+                "name": "fastapi-test",
+                "namespace": "fastapi",
+                "notes": "",
+                "revision": 1,
+                "values": "{\"database\":{\"host\":\"db\",\"image\":\"postgres:15-alpine\",\"name\":\"fastapitest\",\"password\":\"6526\",\"port\":\"5432\",\"user\":\"postgres\"},\"image\":{\"pullPolicy\":\"Never\",\"repository\":\"fastapi_test-web\",\"tag\":\"latest\"},\"service\":{\"nodePort\":30001,\"port\":8000,\"type\":\"NodePort\"}}",
+                "version": "0.1.0"
+              }
+            ],
+            "name": "fastapi-test",
+            "namespace": "fastapi",
+            "pass_credentials": false,
+            "postrender": [],
+            "recreate_pods": false,
+            "render_subchart_notes": true,
+            "replace": false,
+            "repository": null,
+            "repository_ca_file": null,
+            "repository_cert_file": null,
+            "repository_key_file": null,
+            "repository_password": null,
+            "repository_username": null,
+            "reset_values": false,
+            "reuse_values": false,
+            "set": [],
+            "set_list": [],
+            "set_sensitive": [],
+            "skip_crds": false,
+            "status": "deployed",
+            "timeout": 300,
+            "upgrade_install": null,
+            "values": [
+              "database:\r\n  host: \"db\"\r\n  port: \"5432\"\r\n  name: \"fastapitest\"\r\n  user: \"postgres\"\r\n  password: \"6526\"\r\n  image: \"postgres:15-alpine\"\r\n\r\nimage:\r\n  repository: fastapi_test-web\r\n  tag: latest\r\n  pullPolicy: Never\r\n\r\nservice:\r\n  type: NodePort\r\n  port: 8000\r\n  nodePort: 30001\r\n",
+              "{\"database\":{\"host\":\"db\",\"image\":\"postgres:15-alpine\",\"name\":\"fastapitest\",\"password\":\"6526\",\"port\":\"5432\",\"user\":\"postgres\"},\"image\":{\"pullPolicy\":\"Never\",\"repository\":\"fastapi_test-web\",\"tag\":\"latest\"}}"
+            ],
+            "verify": false,
+            "version": "0.1.0",
+            "wait": true,
+            "wait_for_jobs": false
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "repository_password"
+              }
+            ]
+          ],
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "null_resource.build_docker_image"
+          ]
+        }
+      ]
+    },
+    {
+      "mode": "managed",
+      "type": "null_resource",
+      "name": "build_docker_image",
+      "provider": "provider[\"registry.terraform.io/hashicorp/null\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "8570112962560786873",
+            "triggers": null
+          },
+          "sensitive_attributes": []
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}

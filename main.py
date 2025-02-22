@@ -7,6 +7,9 @@ from apps.api.controllers.bookings.bookings_controller import bookings_router
 from apps.api.security.register.user_registration import user_registration_router
 from apps.api.security.authorize.user_authorization import user_authorization_router
 from infra.sql.database.database import engine, SessionLocal, Base
+from config.config import SQLALCHEMY_DATABASE_URI
+
+print(SQLALCHEMY_DATABASE_URI)
 
 Base.metadata.create_all(bind=engine)
 

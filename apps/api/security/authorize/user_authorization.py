@@ -18,8 +18,6 @@ user_authorization_router = APIRouter()
 async def UserAuth(user: UserSchema, db: Session = Depends(get_db)):
     login = user.login
     password = user.password
-    #pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    #pwd_context.verify(password, hashed_password)
     potential_user = db.query(UsersTable).filter(UsersTable.login == login).first()
     hashed_password = potential_user.password
     if not potential_user:

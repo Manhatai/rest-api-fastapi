@@ -1,0 +1,13 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+
+logs/
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+.vscode/
+.idea/
+.DS_Store
